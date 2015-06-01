@@ -30,6 +30,16 @@ nUniquePts <- ceiling((leftChannelLength + 1) / 2)
 leftChannelPoints <- ((abs(leftChannelPoints[1:nUniquePts])) / leftChannelLength) ^ 2
 leftChannelPointsLength = length(leftChannelPoints)
 
+##
+#  Rate * time period = starting time for points
+# i.e. for 3-4sec interval we take 3 sec * 44000 = 120000 is the first point in channel,
+# and final point is 4 sec * 44000 = 160000 point from same channel, so you take part
+# of initial array [120K - 160K]
+# and for this subarray compute the whole part from 
+# BEGIN
+##
+
+
 # multiply by two (see technical document for details)
 # odd nfft excludes Nyquist point
 if (leftChannelLength %% 2 > 0) {
@@ -37,11 +47,24 @@ if (leftChannelLength %% 2 > 0) {
   leftChannelPoints[2:leftChannelPointsLength] <- leftChannelPoints[2:leftChannelPointsLength]*2
 } else {
   # we've got even number of points fft
-  leftChannelPoints[2: (leftChannelPointsLength -1)] <- leftChannelPoints[2: (leftChannelPointsLength -1)]*2
+  leftChannelPoints[2:(leftChannelPointsLength -1)] <- leftChannelPoints[2: (leftChannelPointsLength -1)]*2
 }
 
-#  create the frequency array
+#  create the frequency array (this one is for single period)
 freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500)
 
+##
+# END
+# p.s. do this in a loop or map function to array of periods 
+# (i.e. 4 one-second-long periods or 400 0.01sec-long periods)
+##
+
+#
+# plot 3d here instead of plain graph
+#
 plot(freqArray/1000, 10*log10(leftChannelPoints), type='l', col='black', xlab='Frequency (kHz)', ylab='Power (dB)')
+
+#
+# save to file if needed
+#
 write(freqArray, "out.txt")
