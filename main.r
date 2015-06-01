@@ -67,4 +67,4 @@ freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500)
 #
 # save to file if needed
 #
-write(freqArray, "out.txt")
+write(freqArray, file.path("output", "out.txt"))
