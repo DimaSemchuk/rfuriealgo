@@ -15,7 +15,7 @@ timeArray <- timeArray[seq(0, length(timeArray))]
 #
 # plotting initial data
 #
-plot(timeArray, leftChannelLabels, type='l', col='black', xlab='Time (ms)', ylab='Amplitude')
+#plot(timeArray, leftChannelLabels, type='l', col='black', xlab='Time (ms)', ylab='Amplitude')
 
 #
 # Get FFT points
@@ -51,7 +51,7 @@ if (leftChannelLength %% 2 > 0) {
 }
 
 #  create the frequency array (this one is for single period)
-freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500)
+freqArray <- (0:(nUniquePts - 1)) * ceiling((sample@samp.rate / leftChannelLength))
 
 ##
 # END
@@ -62,9 +62,9 @@ freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500)
 #
 # plot 3d here instead of plain graph
 #
-#plot(freqArray/1000, 10*log10(leftChannelPoints), type='l', col='black', xlab='Frequency (kHz)', ylab='Power (dB)')
+plot(freqArray/1000, 10*log10(leftChannelPoints), type='l', col='orange', xlab='Frequency (kHz)', ylab='Power (dB)')
 
 #
 # save to file if needed
 #
-write(freqArray, file.path("output", "out.txt"))
+write(freqArray, file.path("output", "out.txt"), length(freqArray))
