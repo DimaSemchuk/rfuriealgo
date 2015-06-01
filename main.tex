@@ -1,0 +1,29 @@
+require(tuneR)
+
+#
+# variables block
+#
+sample <- readWave("test.wav")
+leftChannel <- sample@left / 2^(sample@bit -1)
+rightChannel <- sample@right / 2^(sample@bit -1)
+leftChannelLength = length(leftChannel)
+leftChannelLabels <- leftChannel[seq(0, leftChannelLength,500)]
+
+timeArray <- ((0:(length(leftChannel) - 1)) / sample@samp.rate) * 1000
+timeArray <- timeArray[seq(0, length(timeArray), 500)]
+
+#
+# plotting
+#
+plot(timeArray, leftChannelLabels, type='l', col='black', xlab='Time (ms)', ylab='Amplitude')
+
+#
+# Get FFT points
+#
+
+leftChannelPoints <- fft(leftChannel)
+nUniquePts <- ceiling((leftChannelLength + 1) / 2)
+# select just the first half since the second half 
+# is a mirror image of the first
+# and take the absolute value, or the magnitude 
+leftChannelPoints <- abs(leftChannelPoints[1:nUniquePts])
