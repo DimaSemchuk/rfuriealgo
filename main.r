@@ -7,10 +7,10 @@ sample <- readWave("test.wav")
 leftChannel <- sample@left / 2^(sample@bit -1)
 rightChannel <- sample@right / 2^(sample@bit -1)
 leftChannelLength = length(leftChannel)
-leftChannelLabels <- leftChannel[seq(0, leftChannelLength,500)]
+leftChannelLabels <- leftChannel[seq(0, leftChannelLength)]
 
 timeArray <- ((0:(length(leftChannel) - 1)) / sample@samp.rate) * 1000
-timeArray <- timeArray[seq(0, length(timeArray), 500)]
+timeArray <- timeArray[seq(0, length(timeArray))]
 
 #
 # plotting initial data
@@ -40,6 +40,8 @@ if (leftChannelLength %% 2 > 0) {
   leftChannelPoints[2: (leftChannelPointsLength -1)] <- leftChannelPoints[2: (leftChannelPointsLength -1)]*2
 }
 
-freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500) #  create the frequency array 
-plot(freqArray/1000, 10*log10(leftChannelPoints), type='l', col='black', xlab='Frequency (kHz)', ylab='Power (dB)')
+#  create the frequency array
+freqArray <- (0:(nUniquePts - 1)) * (sample@samp.rate / leftChannelLength*500)
 
+plot(freqArray/1000, 10*log10(leftChannelPoints), type='l', col='black', xlab='Frequency (kHz)', ylab='Power (dB)')
+write(freqArray, "out.txt")
