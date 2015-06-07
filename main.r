@@ -3,7 +3,7 @@ require(tuneR)
 #
 # variables block
 #
-sample <- readWave(file.path("samples", "test.wav"))
+sample <- readWave(file.path("samples", "norm", "norm1.wav"))
 leftChannel <- sample@left / 2^(sample@bit -1)
 rightChannel <- sample@right / 2^(sample@bit -1)
 leftChannelLength = length(leftChannel)

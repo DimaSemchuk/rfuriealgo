@@ -1,4 +1,5 @@
-library(tuneR)
+require(tuneR)
+require(signal)
 
 audioFile <- readWave(file.path("samples", "norm", "norm1.wav"))
-str(audioFile)
+specgram(audioFile@left)
