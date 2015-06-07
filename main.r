@@ -15,7 +15,7 @@ timeArray <- timeArray[seq(0, length(timeArray))]
 #
 # plotting initial data
 #
-#plot(timeArray, leftChannelLabels, type='l', col='black', xlab='Time (ms)', ylab='Amplitude')
+# plot(timeArray, leftChannelLabels, type='l', col='black', xlab='Time (ms)', ylab='Amplitude')
 
 #
 # Get FFT points
